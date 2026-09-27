@@ -1,0 +1,235 @@
+geonature.core.imports.config_schema
+====================================
+
+.. py:module:: geonature.core.imports.config_schema
+
+.. autoapi-nested-parse::
+
+   Spécification du schéma toml des paramètres de configurations
+
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   geonature.core.imports.config_schema.DEFAULT_LIST_COLUMN
+   geonature.core.imports.config_schema.UPLOAD_DIRECTORY
+   geonature.core.imports.config_schema.IMPORTS_SCHEMA_NAME
+   geonature.core.imports.config_schema.PREFIX
+   geonature.core.imports.config_schema.SRID
+   geonature.core.imports.config_schema.ENCODAGE
+   geonature.core.imports.config_schema.MAX_FILE_SIZE
+   geonature.core.imports.config_schema.ALLOWED_EXTENSIONS
+   geonature.core.imports.config_schema.DEFAULT_COUNT_VALUE
+   geonature.core.imports.config_schema.ALLOW_VALUE_MAPPING
+   geonature.core.imports.config_schema.DEFAULT_OBSERVER_FIELD_SEPARATORS
+   geonature.core.imports.config_schema.DEFAULT_VALUE_MAPPING_ID
+   geonature.core.imports.config_schema.DEFAULT_VALUE_MAPPINGS
+   geonature.core.imports.config_schema.DEFAULT_RANK
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   geonature.core.imports.config_schema.ImportConfigSchema
+
+
+Module Contents
+---------------
+
+.. py:data:: DEFAULT_LIST_COLUMN
+
+.. py:data:: UPLOAD_DIRECTORY
+   :value: 'upload'
+
+
+.. py:data:: IMPORTS_SCHEMA_NAME
+   :value: 'gn_imports'
+
+
+.. py:data:: PREFIX
+   :value: 'gn_'
+
+
+.. py:data:: SRID
+
+.. py:data:: ENCODAGE
+   :value: ['UTF-8']
+
+
+.. py:data:: MAX_FILE_SIZE
+   :value: 1000
+
+
+.. py:data:: ALLOWED_EXTENSIONS
+   :value: ['.csv']
+
+
+.. py:data:: DEFAULT_COUNT_VALUE
+   :value: 1
+
+
+.. py:data:: ALLOW_VALUE_MAPPING
+   :value: True
+
+
+.. py:data:: DEFAULT_OBSERVER_FIELD_SEPARATORS
+   :value: [';', ',', '|']
+
+
+.. py:data:: DEFAULT_VALUE_MAPPING_ID
+   :value: 3
+
+
+.. py:data:: DEFAULT_VALUE_MAPPINGS
+
+.. py:data:: DEFAULT_RANK
+   :value: 'regne'
+
+
+.. py:class:: ImportConfigSchema(*, only: marshmallow.types.StrSequenceOrSet | None = None, exclude: marshmallow.types.StrSequenceOrSet = (), many: bool | None = None, load_only: marshmallow.types.StrSequenceOrSet = (), dump_only: marshmallow.types.StrSequenceOrSet = (), partial: bool | marshmallow.types.StrSequenceOrSet | None = None, unknown: marshmallow.types.UnknownOption | None = None)
+
+   Bases: :py:obj:`marshmallow.Schema`
+
+
+   Base schema class with which to define schemas.
+
+   Example usage:
+
+   .. code-block:: python
+
+       import datetime as dt
+       from dataclasses import dataclass
+
+       from marshmallow import Schema, fields
+
+
+       @dataclass
+       class Album:
+           title: str
+           release_date: dt.date
+
+
+       class AlbumSchema(Schema):
+           title = fields.Str()
+           release_date = fields.Date()
+
+
+       album = Album("Beggars Banquet", dt.date(1968, 12, 6))
+       schema = AlbumSchema()
+       data = schema.dump(album)
+       data  # {'release_date': '1968-12-06', 'title': 'Beggars Banquet'}
+
+   :param only: Whitelist of the declared fields to select when
+       instantiating the Schema. If None, all fields are used. Nested fields
+       can be represented with dot delimiters.
+   :param exclude: Blacklist of the declared fields to exclude
+       when instantiating the Schema. If a field appears in both `only` and
+       `exclude`, it is not used. Nested fields can be represented with dot
+       delimiters.
+   :param many: Should be set to `True` if ``obj`` is a collection
+       so that the object will be serialized to a list.
+   :param load_only: Fields to skip during serialization (write-only fields)
+   :param dump_only: Fields to skip during deserialization (read-only fields)
+   :param partial: Whether to ignore missing fields and not require
+       any fields declared. Propagates down to ``Nested`` fields as well. If
+       its value is an iterable, only missing fields listed in that iterable
+       will be ignored. Use dot delimiters to specify nested fields.
+   :param unknown: Whether to exclude, include, or raise an error for unknown
+       fields in the data. Use `EXCLUDE`, `INCLUDE` or `RAISE`.
+
+   .. versionchanged:: 3.0.0
+       Remove ``prefix`` parameter.
+
+   .. versionchanged:: 4.0.0
+       Remove ``context`` parameter.
+
+
+   .. py:attribute:: LIST_COLUMNS_FRONTEND
+
+
+   .. py:attribute:: PREFIX
+
+
+   .. py:attribute:: SRID
+
+
+   .. py:attribute:: ENCODAGE
+
+
+   .. py:attribute:: MAX_FILE_SIZE
+
+
+   .. py:attribute:: MAX_ENCODING_DETECTION_DURATION
+
+
+   .. py:attribute:: ALLOWED_EXTENSIONS
+
+
+   .. py:attribute:: DEFAULT_COUNT_VALUE
+
+
+   .. py:attribute:: ALLOW_VALUE_MAPPING
+
+
+   .. py:attribute:: ALLOW_USER_MAPPING
+
+
+   .. py:attribute:: DEFAULT_VALUE_MAPPING_ID
+
+
+   .. py:attribute:: DEFAULT_VALUE_MAPPINGS
+
+
+   .. py:attribute:: FILL_MISSING_NOMENCLATURE_WITH_DEFAULT_VALUE
+
+
+   .. py:attribute:: DISPLAY_MAPPED_VALUES
+
+
+   .. py:attribute:: PER_DATASET_UUID_CHECK
+
+
+   .. py:attribute:: CHECK_PRIVATE_JDD_BLURING
+
+
+   .. py:attribute:: CHECK_REF_BIBLIO_LITTERATURE
+
+
+   .. py:attribute:: CHECK_EXIST_PROOF
+
+
+   .. py:attribute:: DEFAULT_GENERATE_MISSING_UUID
+
+
+   .. py:attribute:: DEFAULT_RANK
+
+
+   .. py:attribute:: ID_AREA_RESTRICTION
+
+
+   .. py:attribute:: ID_LIST_TAXA_RESTRICTION
+
+
+   .. py:attribute:: MODULE_URL
+
+
+   .. py:attribute:: DATAFRAME_BATCH_SIZE
+
+
+   .. py:attribute:: EXPORT_REPORT_PDF_FILENAME
+
+
+   .. py:attribute:: INSERT_BATCH_SIZE
+
+
+   .. py:attribute:: CSV_FIELD_SIZE_LIMIT
+
+
+   .. py:attribute:: OBSERVER_FIELD_SEPARATORS
+
+

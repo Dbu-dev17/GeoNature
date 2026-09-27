@@ -1,0 +1,1421 @@
+geonature.core.gn_permissions.admin
+===================================
+
+.. py:module:: geonature.core.gn_permissions.admin
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   geonature.core.gn_permissions.admin.RoleFilter
+   geonature.core.gn_permissions.admin.ModuleFilter
+   geonature.core.gn_permissions.admin.ObjectFilter
+   geonature.core.gn_permissions.admin.ActionFilter
+   geonature.core.gn_permissions.admin.ScopeFilter
+   geonature.core.gn_permissions.admin.OptionSelect2Widget
+   geonature.core.gn_permissions.admin.OptionQuerySelectField
+   geonature.core.gn_permissions.admin.UserAjaxModelLoader
+   geonature.core.gn_permissions.admin.AreaAjaxModelLoader
+   geonature.core.gn_permissions.admin.TaxrefAjaxModelLoader
+   geonature.core.gn_permissions.admin.ObjectAdmin
+   geonature.core.gn_permissions.admin.PermissionAdmin
+   geonature.core.gn_permissions.admin.PermissionAvailableAdmin
+   geonature.core.gn_permissions.admin.RolePermAdmin
+   geonature.core.gn_permissions.admin.GroupPermAdmin
+   geonature.core.gn_permissions.admin.UserPermAdmin
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   geonature.core.gn_permissions.admin.filters_formatter
+   geonature.core.gn_permissions.admin.modules_formatter
+   geonature.core.gn_permissions.admin.groups_formatter
+   geonature.core.gn_permissions.admin.role_formatter
+   geonature.core.gn_permissions.admin.list_permissions_formatter
+   geonature.core.gn_permissions.admin.permissions_formatter
+   geonature.core.gn_permissions.admin.permissions_count_formatter
+
+
+Module Contents
+---------------
+
+.. py:class:: RoleFilter(column, name, options=None, data_type=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.DynamicOptionsMixin`, :py:obj:`flask_admin.contrib.sqla.filters.FilterEqual`
+
+
+   Base SQLAlchemy filter.
+
+
+   .. py:method:: get_dynamic_options(view)
+
+
+.. py:class:: ModuleFilter(column, name, options=None, data_type=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.DynamicOptionsMixin`, :py:obj:`flask_admin.contrib.sqla.filters.FilterEqual`
+
+
+   Base SQLAlchemy filter.
+
+
+   .. py:method:: get_dynamic_options(view)
+
+
+.. py:class:: ObjectFilter(column, name, options=None, data_type=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.DynamicOptionsMixin`, :py:obj:`flask_admin.contrib.sqla.filters.FilterEqual`
+
+
+   Base SQLAlchemy filter.
+
+
+   .. py:method:: get_dynamic_options(view)
+
+
+.. py:class:: ActionFilter(column, name, options=None, data_type=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.DynamicOptionsMixin`, :py:obj:`flask_admin.contrib.sqla.filters.FilterEqual`
+
+
+   Base SQLAlchemy filter.
+
+
+   .. py:method:: get_dynamic_options(view)
+
+
+.. py:class:: ScopeFilter(column, name, options=None, data_type=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.DynamicOptionsMixin`, :py:obj:`flask_admin.contrib.sqla.filters.FilterEqual`
+
+
+   Base SQLAlchemy filter.
+
+
+   .. py:method:: apply(query, value, alias=None)
+
+      Apply search criteria to the query and return new query.
+
+      :param query:
+          Query
+      :param value:
+          Search criteria
+
+
+
+   .. py:method:: get_dynamic_options(view)
+
+
+.. py:function:: filters_formatter(v, c, m, p)
+
+.. py:function:: modules_formatter(view, context, model, name)
+
+.. py:function:: groups_formatter(view, context, model, name)
+
+.. py:function:: role_formatter(view, context, model, name)
+
+.. py:function:: list_permissions_formatter(permissions, available_permission, managable, current_user, return_url)
+
+   Render a list of permissions for module-object-action item as an HTML table.
+
+   This function generates an HTML table that displays permissions associated to specific
+    module, object, or action. Each permission is rendered with its status, expiration
+   date, and associated filters. If the permissions are manageable, edit and delete options are
+   included for each permission.
+
+   Parameters
+   ----------
+   permissions : list[Permission]
+       A list of permission objects to be rendered.
+   available_permission : PermissionAvailable
+       the permission template.
+   managable : bool
+       A boolean indicating whether the permissions are manageable. If True,
+       edit and delete options will be included in the rendered HTML.
+   model : User
+       current user
+   return_url : str
+       The URL to return to after performing an action (e.g., editing or
+       deleting a permission).
+
+   Returns
+   -------
+   str
+       An HTML string representing the permissions table.
+
+   Notes
+   -----
+   The function uses Bootstrap classes for styling the table and its elements.
+   If a permission has filters, they are displayed as a list within the table cell.
+   If a permission is not active, it is marked with a 'table-secondary' class and a
+   'text-danger' class for the expiration date.
+   If a permission is active but has an expiration date, it is marked with a 'text-success'
+   class for the expiration date.
+
+
+.. py:function:: permissions_formatter(view, context, model, name)
+
+.. py:function:: permissions_count_formatter(view, context, model, name)
+
+.. py:class:: OptionSelect2Widget(multiple=False)
+
+   Bases: :py:obj:`flask_admin.form.widgets.Select2Widget`
+
+
+   `Select2 <https://github.com/ivaynberg/select2>`_ styled select widget.
+
+   You must include select2.js, form-x.x.x.js and select2 stylesheet for it to
+   work.
+
+
+   .. py:method:: render_option(value, label, options)
+      :classmethod:
+
+
+
+.. py:class:: OptionQuerySelectField(*args, **kwargs)
+
+   Bases: :py:obj:`flask_admin.contrib.sqla.fields.QuerySelectField`
+
+
+   Overrides the QuerySelectField class from flask admin to allow
+   other attributes on a select option.
+
+   options_additional_values is added in form_args, it is a list of
+   strings, each element is the name of the attribute in the model
+   which will be added on the option
+
+
+   .. py:attribute:: widget
+
+
+   .. py:attribute:: options_additional_values
+
+
+   .. py:method:: iter_choices()
+
+      Provides data for choice widget rendering. Must return a sequence or
+      iterable of (value, label, selected, render_kw) tuples.
+
+
+
+.. py:class:: UserAjaxModelLoader(name, session, model, **options)
+
+   Bases: :py:obj:`flask_admin.contrib.sqla.ajax.QueryAjaxModelLoader`
+
+
+   Ajax related model loader. Override this to implement custom loading behavior.
+
+
+   .. py:method:: format(user)
+
+      Instead of returning a list of tuple (id, label), we return a list of tuple (id, label, excluded_availabilities).
+      The third element of each tuple is the list of type of permissions the user already have, so it is useless
+      to add this permission to the user, and they will be not available in the front select.
+      Two remarks:
+      - We only consider active permissions of the user
+      - If the type of the permission allows two or more filters, we do not exclude it as it makes sens to add several
+        permissions of the same type with differents set of filters.
+
+
+
+   .. py:method:: get_query()
+
+
+.. py:class:: AreaAjaxModelLoader(name, session, model, **options)
+
+   Bases: :py:obj:`flask_admin.contrib.sqla.ajax.QueryAjaxModelLoader`
+
+
+   Ajax related model loader. Override this to implement custom loading behavior.
+
+
+   .. py:method:: format(area)
+
+      Return (id, name) tuple from the model.
+
+
+
+   .. py:method:: get_one(pk)
+
+      Find model by its primary key.
+
+      :param pk:
+          Primary key value
+
+
+
+   .. py:method:: get_query()
+
+
+   .. py:method:: get_list(term: str, offset: int = 0, limit: int = 10) -> Any
+
+      Return models that match `query`.
+
+      :param view:
+          Administrative view.
+      :param query:
+          Query string
+      :param offset:
+          Offset
+      :param limit:
+          Limit
+
+
+
+.. py:class:: TaxrefAjaxModelLoader(name, session, model, **options)
+
+   Bases: :py:obj:`flask_admin.contrib.sqla.ajax.QueryAjaxModelLoader`
+
+
+   Ajax related model loader. Override this to implement custom loading behavior.
+
+
+   .. py:method:: format(taxref)
+
+      Return (id, name) tuple from the model.
+
+
+
+   .. py:method:: get_query()
+
+
+   .. py:method:: get_one(pk)
+
+      Find model by its primary key.
+
+      :param pk:
+          Primary key value
+
+
+
+.. py:class:: ObjectAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.CruvedProtectedMixin`, :py:obj:`flask_admin.contrib.sqla.ModelView`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: module_code
+      :value: 'ADMIN'
+
+
+
+   .. py:attribute:: object_code
+      :value: 'PERMISSIONS'
+
+
+
+   .. py:attribute:: can_create
+      :value: False
+
+
+      Is model creation allowed
+
+
+
+   .. py:attribute:: can_edit
+      :value: False
+
+
+      Is model editing allowed
+
+
+
+   .. py:attribute:: can_delete
+      :value: False
+
+
+      Is model deletion allowed
+
+
+
+   .. py:attribute:: column_list
+      :value: ('code_object', 'description_object', 'modules')
+
+
+      Collection of the model field names for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', 'last_name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of strings::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', User.last_name)
+
+      When using SQLAlchemy models, you can reference related columns like this::
+          class MyModelView(BaseModelView):
+              column_list = ('<relationship>.<related column name>',)
+
+
+
+   .. py:attribute:: column_labels
+
+      Dictionary where key is column name and value is string to display.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_labels = dict(name='Name', last_name='Last Name')
+
+
+
+   .. py:attribute:: column_default_sort
+      :value: 'id_object'
+
+
+      Default sort column if no sorting is applied.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = 'user'
+
+      You can use tuple to control ascending descending order. In following example, items
+      will be sorted in descending order::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = ('user', True)
+
+      If you want to sort by more than one column,
+      you can pass a list of tuples::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = [('name', True), ('last_name', True)]
+
+
+
+   .. py:attribute:: column_formatters
+
+      Dictionary of list view column formatters.
+
+      For example, if you want to show price multiplied by
+      two, you can do something like this::
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=lambda v, c, m, p: m.price*2)
+
+      or using Jinja2 `macro` in template::
+
+          from flask_admin.model.template import macro
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=macro('render_price'))
+
+          # in template
+          {% macro render_price(model, column) %}
+              {{ model.price * 2 }}
+          {% endmacro %}
+
+      The Callback function has the prototype::
+
+          def formatter(view, context, model, name):
+              # `view` is current administrative view
+              # `context` is instance of jinja2.runtime.Context
+              # `model` is model instance
+              # `name` is property name
+              pass
+
+
+
+.. py:class:: PermissionAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.CruvedProtectedMixin`, :py:obj:`flask_admin.contrib.sqla.ModelView`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: module_code
+      :value: 'ADMIN'
+
+
+
+   .. py:attribute:: object_code
+      :value: 'PERMISSIONS'
+
+
+
+   .. py:attribute:: column_list
+      :value: ('role', 'module', 'object', 'action', 'label', 'filters', 'expire_on')
+
+
+      Collection of the model field names for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', 'last_name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of strings::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', User.last_name)
+
+      When using SQLAlchemy models, you can reference related columns like this::
+          class MyModelView(BaseModelView):
+              column_list = ('<relationship>.<related column name>',)
+
+
+
+   .. py:attribute:: column_labels
+
+      Dictionary where key is column name and value is string to display.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_labels = dict(name='Name', last_name='Last Name')
+
+
+
+   .. py:attribute:: column_select_related_list
+      :value: ('availability',)
+
+
+      List of parameters for SQLAlchemy `subqueryload`. Overrides `column_auto_select_related`
+      property.
+
+      For example::
+
+          class PostAdmin(ModelView):
+              column_select_related_list = ('user', 'city')
+
+      You can also use properties::
+
+          class PostAdmin(ModelView):
+              column_select_related_list = (Post.user, Post.city)
+
+      Please refer to the `subqueryload` on list of possible values.
+
+
+
+   .. py:attribute:: column_searchable_list
+      :value: ('role.identifiant', 'role.nom_complet')
+
+
+      Collection of the searchable columns.
+
+      Example::
+
+          class MyModelView(ModelView):
+              column_searchable_list = ('name', 'email')
+
+      You can also pass columns::
+
+          class MyModelView(ModelView):
+              column_searchable_list = (User.name, User.email)
+
+      The following search rules apply:
+
+      - If you enter ``ZZZ`` in the UI search field, it will generate ``ILIKE '%ZZZ%'``
+        statement against searchable columns.
+
+      - If you enter multiple words, each word will be searched separately, but
+        only rows that contain all words will be displayed. For example, searching
+        for ``abc def`` will find all rows that contain ``abc`` and ``def`` in one or
+        more columns.
+
+      - If you prefix your search term with ``^``, it will find all rows
+        that start with ``^``. So, if you entered ``^ZZZ`` then ``ILIKE 'ZZZ%'`` will be used.
+
+      - If you prefix your search term with ``=``, it will perform an exact match.
+        For example, if you entered ``=ZZZ``, the statement ``ILIKE 'ZZZ'`` will be used.
+
+
+
+   .. py:attribute:: column_formatters
+
+      Dictionary of list view column formatters.
+
+      For example, if you want to show price multiplied by
+      two, you can do something like this::
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=lambda v, c, m, p: m.price*2)
+
+      or using Jinja2 `macro` in template::
+
+          from flask_admin.model.template import macro
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=macro('render_price'))
+
+          # in template
+          {% macro render_price(model, column) %}
+              {{ model.price * 2 }}
+          {% endmacro %}
+
+      The Callback function has the prototype::
+
+          def formatter(view, context, model, name):
+              # `view` is current administrative view
+              # `context` is instance of jinja2.runtime.Context
+              # `model` is model instance
+              # `name` is property name
+              pass
+
+
+
+   .. py:attribute:: column_filters
+
+      Collection of the column filters.
+
+      Can contain either field names or instances of
+      :class:`flask_admin.contrib.sqla.filters.BaseSQLAFilter` classes.
+
+      Filters will be grouped by name when displayed in the drop-down.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_filters = ('user', 'email')
+
+      or::
+
+          from flask_admin.contrib.sqla.filters import BooleanEqualFilter
+
+          class MyModelView(BaseModelView):
+              column_filters = (BooleanEqualFilter(column=User.name, name='Name'),)
+
+      or::
+
+          from flask_admin.contrib.sqla.filters import BaseSQLAFilter
+
+          class FilterLastNameBrown(BaseSQLAFilter):
+              def apply(self, query, value, alias=None):
+                  if value == '1':
+                      return query.filter(self.column == "Brown")
+                  else:
+                      return query.filter(self.column != "Brown")
+
+              def operation(self):
+                  return 'is Brown'
+
+          class MyModelView(BaseModelView):
+              column_filters = [
+                  FilterLastNameBrown(
+                      User.last_name, 'Last Name', options=(('1', 'Yes'), ('0', 'No'))
+                  )
+              ]
+
+
+
+   .. py:attribute:: named_filter_urls
+      :value: True
+
+
+      Set to True to use human-readable names for filters in URL parameters.
+
+      False by default so as to be robust across translations.
+
+      Changing this parameter will break any existing URLs that have filters.
+
+
+
+   .. py:attribute:: column_sortable_list
+      :value: (('role', 'role.nom_complet'), ('module', 'module.module_code'), ('object',...
+
+
+      Collection of the sortable columns for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', 'last_name')
+
+      If you want to explicitly specify field/column to be used while
+      sorting, you can use a tuple::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', ('user', 'user.username'))
+
+      You can also specify multiple fields to be used while sorting::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = (
+                  'name', ('user', ('user.first_name', 'user.last_name')))
+
+      When using SQLAlchemy models, model attributes can be used instead
+      of strings::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', ('user', User.username))
+
+
+
+   .. py:attribute:: column_default_sort
+      :value: [('role.nom_complet', False), ('module.module_code', False), ('object.code_object', False),...
+
+
+      Default sort column if no sorting is applied.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = 'user'
+
+      You can use tuple to control ascending descending order. In following example, items
+      will be sorted in descending order::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = ('user', True)
+
+      If you want to sort by more than one column,
+      you can pass a list of tuples::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = [('name', True), ('last_name', True)]
+
+
+
+   .. py:attribute:: form_columns
+      :value: ('role', 'availability', 'scope', 'sensitivity_filter', 'areas_filter', 'taxons_filter', 'expire_on')
+
+
+      Collection of the model field names for the form. If set to `None` will
+      get them from the model.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              form_columns = ('name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of
+      strings::
+
+          class MyModelView(BaseModelView):
+              form_columns = ('name', User.last_name)
+
+      SQLA Note: Model attributes must be on the same model as your ModelView
+      or you will need to use `inline_models`.
+
+
+
+   .. py:attribute:: form_overrides
+
+      Dictionary of form column overrides.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              form_overrides = dict(name=wtf.FileField)
+
+
+
+   .. py:attribute:: form_args
+
+      Dictionary of form field arguments. Refer to WTForms documentation for
+      list of possible options.
+
+      Example::
+
+          from wtforms.validators import DataRequired
+          class MyModelView(BaseModelView):
+              form_args = dict(
+                  name=dict(label='First Name', validators=[DataRequired()])
+              )
+
+
+
+   .. py:attribute:: create_template
+      :value: 'admin/hide_select2_options_create.html'
+
+
+      Default create template
+
+
+
+   .. py:attribute:: edit_template
+      :value: 'admin/hide_select2_options_edit.html'
+
+
+      Default edit template
+
+
+
+   .. py:attribute:: form_ajax_refs
+
+      Use AJAX for foreign key model loading.
+
+      Should contain dictionary, where key is field name and value is either a dictionary which
+      configures AJAX lookups or backend-specific `AjaxModelLoader` class instance.
+
+      For example, it can look like::
+
+          class MyModelView(BaseModelView):
+              form_ajax_refs = {
+                  'user': {
+                      'fields': ('first_name', 'last_name', 'email'),
+                      'placeholder': 'Please select',
+                      'page_size': 10,
+                      'minimum_input_length': 0,
+                  }
+              }
+
+      Or with SQLAlchemy backend like this::
+
+          class MyModelView(BaseModelView):
+              form_ajax_refs = {
+                  'user': QueryAjaxModelLoader('user', db.session, User, fields=['email'], page_size=10)
+              }
+
+      If you need custom loading functionality, you can implement your custom loading behavior
+      in your `AjaxModelLoader` class.
+
+
+
+   .. py:method:: get_query()
+
+      Return a query for the model type.
+
+      This method can be used to set a "persistent filter" on an index_view.
+
+      Example::
+
+          class MyView(ModelView):
+              def get_query(self):
+                  return super(MyView, self).get_query().filter(User.username == current_user.username)
+
+
+      If you override this method, don't forget to also override `get_count_query`, for displaying the correct
+      item count in the list view, and `get_one`, which is used when retrieving records for the edit view.
+
+
+
+   .. py:method:: get_count_query()
+
+      Return a the count query for the model type
+
+      A ``query(self.model).count()`` approach produces an excessive
+      subquery, so ``query(func.count('*'))`` should be used instead.
+
+      See commit ``#45a2723`` for details.
+
+
+
+   .. py:method:: render(template, **kwargs)
+
+      Render template
+
+      :param template:
+          Template path to render
+      :param kwargs:
+          Template arguments
+
+
+
+   .. py:method:: create_form()
+
+      Instantiate model creation form and return it.
+
+      Override to implement custom behavior.
+
+
+
+.. py:class:: PermissionAvailableAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.CruvedProtectedMixin`, :py:obj:`flask_admin.contrib.sqla.ModelView`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: module_code
+      :value: 'ADMIN'
+
+
+
+   .. py:attribute:: object_code
+      :value: 'PERMISSIONS'
+
+
+
+   .. py:attribute:: can_create
+      :value: False
+
+
+      Is model creation allowed
+
+
+
+   .. py:attribute:: can_delete
+      :value: False
+
+
+      Is model deletion allowed
+
+
+
+   .. py:attribute:: can_export
+      :value: False
+
+
+      Is model list export allowed
+
+
+
+   .. py:attribute:: column_labels
+
+      Dictionary where key is column name and value is string to display.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_labels = dict(name='Name', last_name='Last Name')
+
+
+
+   .. py:attribute:: column_formatters
+
+      Dictionary of list view column formatters.
+
+      For example, if you want to show price multiplied by
+      two, you can do something like this::
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=lambda v, c, m, p: m.price*2)
+
+      or using Jinja2 `macro` in template::
+
+          from flask_admin.model.template import macro
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=macro('render_price'))
+
+          # in template
+          {% macro render_price(model, column) %}
+              {{ model.price * 2 }}
+          {% endmacro %}
+
+      The Callback function has the prototype::
+
+          def formatter(view, context, model, name):
+              # `view` is current administrative view
+              # `context` is instance of jinja2.runtime.Context
+              # `model` is model instance
+              # `name` is property name
+              pass
+
+
+
+   .. py:attribute:: column_sortable_list
+      :value: (('module', 'module.module_code'), ('object', 'object.code_object'), ('action', 'action.code_action'))
+
+
+      Collection of the sortable columns for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', 'last_name')
+
+      If you want to explicitly specify field/column to be used while
+      sorting, you can use a tuple::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', ('user', 'user.username'))
+
+      You can also specify multiple fields to be used while sorting::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = (
+                  'name', ('user', ('user.first_name', 'user.last_name')))
+
+      When using SQLAlchemy models, model attributes can be used instead
+      of strings::
+
+          class MyModelView(BaseModelView):
+              column_sortable_list = ('name', ('user', User.username))
+
+
+
+   .. py:attribute:: column_filters
+
+      Collection of the column filters.
+
+      Can contain either field names or instances of
+      :class:`flask_admin.contrib.sqla.filters.BaseSQLAFilter` classes.
+
+      Filters will be grouped by name when displayed in the drop-down.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_filters = ('user', 'email')
+
+      or::
+
+          from flask_admin.contrib.sqla.filters import BooleanEqualFilter
+
+          class MyModelView(BaseModelView):
+              column_filters = (BooleanEqualFilter(column=User.name, name='Name'),)
+
+      or::
+
+          from flask_admin.contrib.sqla.filters import BaseSQLAFilter
+
+          class FilterLastNameBrown(BaseSQLAFilter):
+              def apply(self, query, value, alias=None):
+                  if value == '1':
+                      return query.filter(self.column == "Brown")
+                  else:
+                      return query.filter(self.column != "Brown")
+
+              def operation(self):
+                  return 'is Brown'
+
+          class MyModelView(BaseModelView):
+              column_filters = [
+                  FilterLastNameBrown(
+                      User.last_name, 'Last Name', options=(('1', 'Yes'), ('0', 'No'))
+                  )
+              ]
+
+
+
+   .. py:attribute:: column_default_sort
+      :value: [('module.module_code', False), ('object.code_object', False), ('id_action', False)]
+
+
+      Default sort column if no sorting is applied.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = 'user'
+
+      You can use tuple to control ascending descending order. In following example, items
+      will be sorted in descending order::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = ('user', True)
+
+      If you want to sort by more than one column,
+      you can pass a list of tuples::
+
+          class MyModelView(BaseModelView):
+              column_default_sort = [('name', True), ('last_name', True)]
+
+
+
+   .. py:attribute:: form_columns
+      :value: ('scope_filter', 'sensitivity_filter', 'areas_filter', 'taxons_filter')
+
+
+      Collection of the model field names for the form. If set to `None` will
+      get them from the model.
+
+      Example::
+
+          class MyModelView(BaseModelView):
+              form_columns = ('name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of
+      strings::
+
+          class MyModelView(BaseModelView):
+              form_columns = ('name', User.last_name)
+
+      SQLA Note: Model attributes must be on the same model as your ModelView
+      or you will need to use `inline_models`.
+
+
+
+.. py:class:: RolePermAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`geonature.core.admin.utils.CruvedProtectedMixin`, :py:obj:`flask_admin.contrib.sqla.ModelView`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: module_code
+      :value: 'ADMIN'
+
+
+
+   .. py:attribute:: object_code
+      :value: 'PERMISSIONS'
+
+
+
+   .. py:attribute:: can_create
+      :value: False
+
+
+      Is model creation allowed
+
+
+
+   .. py:attribute:: can_edit
+      :value: False
+
+
+      Is model editing allowed
+
+
+
+   .. py:attribute:: can_delete
+      :value: False
+
+
+      Is model deletion allowed
+
+
+
+   .. py:attribute:: can_export
+      :value: False
+
+
+      Is model list export allowed
+
+
+
+   .. py:attribute:: can_view_details
+      :value: True
+
+
+      Setting this to true will enable the details view. This is recommended
+      when there are too many columns to display in the list_view.
+
+
+
+   .. py:attribute:: details_template
+      :value: 'role_or_group_detail.html'
+
+
+      Default details view template
+
+
+
+   .. py:attribute:: column_select_related_list
+      :value: ('permissions',)
+
+
+      List of parameters for SQLAlchemy `subqueryload`. Overrides `column_auto_select_related`
+      property.
+
+      For example::
+
+          class PostAdmin(ModelView):
+              column_select_related_list = ('user', 'city')
+
+      You can also use properties::
+
+          class PostAdmin(ModelView):
+              column_select_related_list = (Post.user, Post.city)
+
+      Please refer to the `subqueryload` on list of possible values.
+
+
+
+   .. py:attribute:: column_labels
+
+      Dictionary where key is column name and value is string to display.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_labels = dict(name='Name', last_name='Last Name')
+
+
+
+   .. py:attribute:: column_searchable_list
+      :value: ('identifiant', 'nom_complet')
+
+
+      Collection of the searchable columns.
+
+      Example::
+
+          class MyModelView(ModelView):
+              column_searchable_list = ('name', 'email')
+
+      You can also pass columns::
+
+          class MyModelView(ModelView):
+              column_searchable_list = (User.name, User.email)
+
+      The following search rules apply:
+
+      - If you enter ``ZZZ`` in the UI search field, it will generate ``ILIKE '%ZZZ%'``
+        statement against searchable columns.
+
+      - If you enter multiple words, each word will be searched separately, but
+        only rows that contain all words will be displayed. For example, searching
+        for ``abc def`` will find all rows that contain ``abc`` and ``def`` in one or
+        more columns.
+
+      - If you prefix your search term with ``^``, it will find all rows
+        that start with ``^``. So, if you entered ``^ZZZ`` then ``ILIKE 'ZZZ%'`` will be used.
+
+      - If you prefix your search term with ``=``, it will perform an exact match.
+        For example, if you entered ``=ZZZ``, the statement ``ILIKE 'ZZZ'`` will be used.
+
+
+
+   .. py:attribute:: column_formatters
+
+      Dictionary of list view column formatters.
+
+      For example, if you want to show price multiplied by
+      two, you can do something like this::
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=lambda v, c, m, p: m.price*2)
+
+      or using Jinja2 `macro` in template::
+
+          from flask_admin.model.template import macro
+
+          class MyModelView(BaseModelView):
+              column_formatters = dict(price=macro('render_price'))
+
+          # in template
+          {% macro render_price(model, column) %}
+              {{ model.price * 2 }}
+          {% endmacro %}
+
+      The Callback function has the prototype::
+
+          def formatter(view, context, model, name):
+              # `view` is current administrative view
+              # `context` is instance of jinja2.runtime.Context
+              # `model` is model instance
+              # `name` is property name
+              pass
+
+
+
+   .. py:attribute:: column_formatters_detail
+
+      Dictionary of list view column formatters to be used for the detail view.
+
+      Defaults to column_formatters when set to None.
+
+      Functions the same way as column_formatters except
+      that macros are not supported.
+
+
+
+   .. py:method:: get_query()
+
+      Return a query for the model type.
+
+      This method can be used to set a "persistent filter" on an index_view.
+
+      Example::
+
+          class MyView(ModelView):
+              def get_query(self):
+                  return super(MyView, self).get_query().filter(User.username == current_user.username)
+
+
+      If you override this method, don't forget to also override `get_count_query`, for displaying the correct
+      item count in the list view, and `get_one`, which is used when retrieving records for the edit view.
+
+
+
+   .. py:method:: get_count_query()
+
+      Return a the count query for the model type
+
+      A ``query(self.model).count()`` approach produces an excessive
+      subquery, so ``query(func.count('*'))`` should be used instead.
+
+      See commit ``#45a2723`` for details.
+
+
+
+.. py:class:: GroupPermAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`RolePermAdmin`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: column_list
+      :value: ('nom_role', 'permissions_count')
+
+
+      Collection of the model field names for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', 'last_name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of strings::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', User.last_name)
+
+      When using SQLAlchemy models, you can reference related columns like this::
+          class MyModelView(BaseModelView):
+              column_list = ('<relationship>.<related column name>',)
+
+
+
+   .. py:attribute:: column_details_list
+      :value: ('nom_role', 'permissions_count', 'permissions')
+
+
+      Collection of the field names included in the details view.
+      If set to `None`, will get them from the model.
+
+
+
+   .. py:method:: get_query()
+
+      Return a query for the model type.
+
+      This method can be used to set a "persistent filter" on an index_view.
+
+      Example::
+
+          class MyView(ModelView):
+              def get_query(self):
+                  return super(MyView, self).get_query().filter(User.username == current_user.username)
+
+
+      If you override this method, don't forget to also override `get_count_query`, for displaying the correct
+      item count in the list view, and `get_one`, which is used when retrieving records for the edit view.
+
+
+
+   .. py:method:: get_count_query()
+
+      Return a the count query for the model type
+
+      A ``query(self.model).count()`` approach produces an excessive
+      subquery, so ``query(func.count('*'))`` should be used instead.
+
+      See commit ``#45a2723`` for details.
+
+
+
+.. py:class:: UserPermAdmin(model, session, name=None, category=None, endpoint=None, url=None, static_folder=None, menu_class_name=None, menu_icon_type=None, menu_icon_value=None)
+
+   Bases: :py:obj:`RolePermAdmin`
+
+
+   SQLAlchemy model view
+
+   Usage sample::
+
+       admin = Admin()
+       admin.add_view(ModelView(User, db.session))
+
+
+   .. py:attribute:: column_list
+      :value: ('identifiant', 'nom_role', 'prenom_role', 'groups', 'permissions_count')
+
+
+      Collection of the model field names for the list view.
+      If set to `None`, will get them from the model.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', 'last_name', 'email')
+
+      (Added in 1.4.0) SQLAlchemy model attributes can be used instead of strings::
+
+          class MyModelView(BaseModelView):
+              column_list = ('name', User.last_name)
+
+      When using SQLAlchemy models, you can reference related columns like this::
+          class MyModelView(BaseModelView):
+              column_list = ('<relationship>.<related column name>',)
+
+
+
+   .. py:attribute:: column_labels
+
+      Dictionary where key is column name and value is string to display.
+
+      For example::
+
+          class MyModelView(BaseModelView):
+              column_labels = dict(name='Name', last_name='Last Name')
+
+
+
+   .. py:attribute:: column_details_list
+      :value: ('identifiant', 'nom_role', 'prenom_role', 'groups', 'permissions_count', 'permissions')
+
+
+      Collection of the field names included in the details view.
+      If set to `None`, will get them from the model.
+
+
+
+   .. py:method:: get_query()
+
+      Return a query for the model type.
+
+      This method can be used to set a "persistent filter" on an index_view.
+
+      Example::
+
+          class MyView(ModelView):
+              def get_query(self):
+                  return super(MyView, self).get_query().filter(User.username == current_user.username)
+
+
+      If you override this method, don't forget to also override `get_count_query`, for displaying the correct
+      item count in the list view, and `get_one`, which is used when retrieving records for the edit view.
+
+
+
+   .. py:method:: get_count_query()
+
+      Return a the count query for the model type
+
+      A ``query(self.model).count()`` approach produces an excessive
+      subquery, so ``query(func.count('*'))`` should be used instead.
+
+      See commit ``#45a2723`` for details.
+
+
+

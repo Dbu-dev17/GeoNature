@@ -1,0 +1,409 @@
+geonature.core.gn_meta.models.commons
+=====================================
+
+.. py:module:: geonature.core.gn_meta.models.commons
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   geonature.core.gn_meta.models.commons.MIN_LENGTH_UUID_OR_DATE_SEARCH_STRING
+   geonature.core.gn_meta.models.commons.cor_acquisition_framework_objectif
+   geonature.core.gn_meta.models.commons.cor_acquisition_framework_voletsinp
+   geonature.core.gn_meta.models.commons.cor_acquisition_framework_territory
+   geonature.core.gn_meta.models.commons.cor_dataset_territory
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   geonature.core.gn_meta.models.commons.DateFilterSchema
+   geonature.core.gn_meta.models.commons.MetadataFilterSchema
+   geonature.core.gn_meta.models.commons.CorAcquisitionFrameworkActor
+   geonature.core.gn_meta.models.commons.CorDatasetActor
+   geonature.core.gn_meta.models.commons.CorDatasetProtocol
+   geonature.core.gn_meta.models.commons.TBibliographicReference
+
+
+Module Contents
+---------------
+
+.. py:data:: MIN_LENGTH_UUID_OR_DATE_SEARCH_STRING
+   :value: 5
+
+
+.. py:class:: DateFilterSchema(*, only: marshmallow.types.StrSequenceOrSet | None = None, exclude: marshmallow.types.StrSequenceOrSet = (), many: bool | None = None, load_only: marshmallow.types.StrSequenceOrSet = (), dump_only: marshmallow.types.StrSequenceOrSet = (), partial: bool | marshmallow.types.StrSequenceOrSet | None = None, unknown: marshmallow.types.UnknownOption | None = None)
+
+   Bases: :py:obj:`marshmallow.Schema`
+
+
+   Base schema class with which to define schemas.
+
+   Example usage:
+
+   .. code-block:: python
+
+       import datetime as dt
+       from dataclasses import dataclass
+
+       from marshmallow import Schema, fields
+
+
+       @dataclass
+       class Album:
+           title: str
+           release_date: dt.date
+
+
+       class AlbumSchema(Schema):
+           title = fields.Str()
+           release_date = fields.Date()
+
+
+       album = Album("Beggars Banquet", dt.date(1968, 12, 6))
+       schema = AlbumSchema()
+       data = schema.dump(album)
+       data  # {'release_date': '1968-12-06', 'title': 'Beggars Banquet'}
+
+   :param only: Whitelist of the declared fields to select when
+       instantiating the Schema. If None, all fields are used. Nested fields
+       can be represented with dot delimiters.
+   :param exclude: Blacklist of the declared fields to exclude
+       when instantiating the Schema. If a field appears in both `only` and
+       `exclude`, it is not used. Nested fields can be represented with dot
+       delimiters.
+   :param many: Should be set to `True` if ``obj`` is a collection
+       so that the object will be serialized to a list.
+   :param load_only: Fields to skip during serialization (write-only fields)
+   :param dump_only: Fields to skip during deserialization (read-only fields)
+   :param partial: Whether to ignore missing fields and not require
+       any fields declared. Propagates down to ``Nested`` fields as well. If
+       its value is an iterable, only missing fields listed in that iterable
+       will be ignored. Use dot delimiters to specify nested fields.
+   :param unknown: Whether to exclude, include, or raise an error for unknown
+       fields in the data. Use `EXCLUDE`, `INCLUDE` or `RAISE`.
+
+   .. versionchanged:: 3.0.0
+       Remove ``prefix`` parameter.
+
+   .. versionchanged:: 4.0.0
+       Remove ``context`` parameter.
+
+
+   .. py:attribute:: year
+
+
+   .. py:attribute:: month
+
+
+   .. py:attribute:: day
+
+
+.. py:class:: MetadataFilterSchema(*, only: marshmallow.types.StrSequenceOrSet | None = None, exclude: marshmallow.types.StrSequenceOrSet = (), many: bool | None = None, load_only: marshmallow.types.StrSequenceOrSet = (), dump_only: marshmallow.types.StrSequenceOrSet = (), partial: bool | marshmallow.types.StrSequenceOrSet | None = None, unknown: marshmallow.types.UnknownOption | None = None)
+
+   Bases: :py:obj:`marshmallow.Schema`
+
+
+   Base schema class with which to define schemas.
+
+   Example usage:
+
+   .. code-block:: python
+
+       import datetime as dt
+       from dataclasses import dataclass
+
+       from marshmallow import Schema, fields
+
+
+       @dataclass
+       class Album:
+           title: str
+           release_date: dt.date
+
+
+       class AlbumSchema(Schema):
+           title = fields.Str()
+           release_date = fields.Date()
+
+
+       album = Album("Beggars Banquet", dt.date(1968, 12, 6))
+       schema = AlbumSchema()
+       data = schema.dump(album)
+       data  # {'release_date': '1968-12-06', 'title': 'Beggars Banquet'}
+
+   :param only: Whitelist of the declared fields to select when
+       instantiating the Schema. If None, all fields are used. Nested fields
+       can be represented with dot delimiters.
+   :param exclude: Blacklist of the declared fields to exclude
+       when instantiating the Schema. If a field appears in both `only` and
+       `exclude`, it is not used. Nested fields can be represented with dot
+       delimiters.
+   :param many: Should be set to `True` if ``obj`` is a collection
+       so that the object will be serialized to a list.
+   :param load_only: Fields to skip during serialization (write-only fields)
+   :param dump_only: Fields to skip during deserialization (read-only fields)
+   :param partial: Whether to ignore missing fields and not require
+       any fields declared. Propagates down to ``Nested`` fields as well. If
+       its value is an iterable, only missing fields listed in that iterable
+       will be ignored. Use dot delimiters to specify nested fields.
+   :param unknown: Whether to exclude, include, or raise an error for unknown
+       fields in the data. Use `EXCLUDE`, `INCLUDE` or `RAISE`.
+
+   .. versionchanged:: 3.0.0
+       Remove ``prefix`` parameter.
+
+   .. versionchanged:: 4.0.0
+       Remove ``context`` parameter.
+
+
+   .. py:class:: Meta
+
+      Options object for a Schema.
+
+      Example usage: ::
+
+          from marshmallow import Schema
+
+
+          class MySchema(Schema):
+              class Meta:
+                  fields = ("id", "email", "date_created")
+                  exclude = ("password", "secret_attribute")
+
+      .. admonition:: A note on type checking
+
+          Type checkers will only check the attributes of the `Meta <marshmallow.Schema.Meta>`
+          class if you explicitly subclass `marshmallow.Schema.Meta`.
+
+          .. code-block:: python
+
+              from marshmallow import Schema
+
+
+              class MySchema(Schema):
+                  # Not checked by type checkers
+                  class Meta:
+                      additional = True
+
+
+              class MySchema2(Schema):
+                  # Type checkers will check attributes
+                  class Meta(Schema.Opts):
+                      additional = True  # Incompatible types in assignment
+
+      .. versionremoved:: 3.0.0b7 Remove ``strict``.
+      .. versionadded:: 3.0.0b12 Add `unknown`.
+      .. versionchanged:: 3.0.0b17 Rename ``dateformat`` to `datetimeformat`.
+      .. versionadded:: 3.9.0 Add `timeformat`.
+      .. versionchanged:: 3.26.0 Deprecate ``ordered``. Field order is preserved by default.
+      .. versionremoved:: 4.0.0 Remove ``ordered``.
+
+
+      .. py:attribute:: unknown
+         :value: 'exclude'
+
+
+
+
+   .. py:attribute:: uuid
+
+
+   .. py:attribute:: name
+
+
+   .. py:attribute:: date
+
+
+   .. py:attribute:: person
+
+
+   .. py:attribute:: organism
+
+
+   .. py:attribute:: areas
+
+
+   .. py:attribute:: search
+
+
+   .. py:attribute:: is_parent
+
+
+   .. py:attribute:: opened
+
+
+   .. py:method:: convert_date(data, **kwargs)
+
+
+.. py:data:: cor_acquisition_framework_objectif
+
+.. py:data:: cor_acquisition_framework_voletsinp
+
+.. py:data:: cor_acquisition_framework_territory
+
+.. py:class:: CorAcquisitionFrameworkActor
+
+   Bases: :py:obj:`geonature.utils.env.DB.Model`
+
+
+   The base class of the :attr:`.SQLAlchemy.Model` declarative model class.
+
+   To define models, subclass :attr:`db.Model <.SQLAlchemy.Model>`, not this. To
+   customize ``db.Model``, subclass this and pass it as ``model_class`` to
+   :class:`.SQLAlchemy`. To customize ``db.Model`` at the metaclass level, pass an
+   already created declarative model class as ``model_class``.
+
+
+   .. py:attribute:: __tablename__
+      :value: 'cor_acquisition_framework_actor'
+
+
+
+   .. py:attribute:: __table_args__
+
+
+   .. py:attribute:: id_cafa
+
+
+   .. py:attribute:: id_acquisition_framework
+
+
+   .. py:attribute:: id_role
+
+
+   .. py:attribute:: id_organism
+
+
+   .. py:attribute:: id_nomenclature_actor_role
+
+
+   .. py:attribute:: nomenclature_actor_role
+
+
+   .. py:attribute:: role
+
+
+   .. py:attribute:: organism
+
+
+.. py:class:: CorDatasetActor
+
+   Bases: :py:obj:`geonature.utils.env.DB.Model`
+
+
+   The base class of the :attr:`.SQLAlchemy.Model` declarative model class.
+
+   To define models, subclass :attr:`db.Model <.SQLAlchemy.Model>`, not this. To
+   customize ``db.Model``, subclass this and pass it as ``model_class`` to
+   :class:`.SQLAlchemy`. To customize ``db.Model`` at the metaclass level, pass an
+   already created declarative model class as ``model_class``.
+
+
+   .. py:attribute:: __tablename__
+      :value: 'cor_dataset_actor'
+
+
+
+   .. py:attribute:: __table_args__
+
+
+   .. py:attribute:: id_cda
+
+
+   .. py:attribute:: id_dataset
+
+
+   .. py:attribute:: id_role
+
+
+   .. py:attribute:: id_organism
+
+
+   .. py:attribute:: id_nomenclature_actor_role
+
+
+   .. py:attribute:: nomenclature_actor_role
+
+
+   .. py:attribute:: role
+
+
+   .. py:attribute:: organism
+
+
+   .. py:method:: actor()
+
+
+   .. py:method:: display()
+
+
+.. py:class:: CorDatasetProtocol
+
+   Bases: :py:obj:`geonature.utils.env.DB.Model`
+
+
+   The base class of the :attr:`.SQLAlchemy.Model` declarative model class.
+
+   To define models, subclass :attr:`db.Model <.SQLAlchemy.Model>`, not this. To
+   customize ``db.Model``, subclass this and pass it as ``model_class`` to
+   :class:`.SQLAlchemy`. To customize ``db.Model`` at the metaclass level, pass an
+   already created declarative model class as ``model_class``.
+
+
+   .. py:attribute:: __tablename__
+      :value: 'cor_dataset_protocol'
+
+
+
+   .. py:attribute:: __table_args__
+
+
+   .. py:attribute:: id_cdp
+
+
+   .. py:attribute:: id_dataset
+
+
+   .. py:attribute:: id_protocol
+
+
+.. py:data:: cor_dataset_territory
+
+.. py:class:: TBibliographicReference
+
+   Bases: :py:obj:`geonature.utils.env.db.Model`
+
+
+   The base class of the :attr:`.SQLAlchemy.Model` declarative model class.
+
+   To define models, subclass :attr:`db.Model <.SQLAlchemy.Model>`, not this. To
+   customize ``db.Model``, subclass this and pass it as ``model_class`` to
+   :class:`.SQLAlchemy`. To customize ``db.Model`` at the metaclass level, pass an
+   already created declarative model class as ``model_class``.
+
+
+   .. py:attribute:: __tablename__
+      :value: 't_bibliographical_references'
+
+
+
+   .. py:attribute:: __table_args__
+
+
+   .. py:attribute:: id_bibliographic_reference
+
+
+   .. py:attribute:: id_acquisition_framework
+
+
+   .. py:attribute:: publication_url
+
+
+   .. py:attribute:: publication_reference
+
+

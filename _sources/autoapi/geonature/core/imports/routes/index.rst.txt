@@ -1,0 +1,282 @@
+geonature.core.imports.routes
+=============================
+
+.. py:module:: geonature.core.imports.routes
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/geonature/core/imports/routes/fields/index
+   /autoapi/geonature/core/imports/routes/imports/index
+   /autoapi/geonature/core/imports/routes/mappings/index
+
+
+Attributes
+----------
+
+.. autoapisummary::
+
+   geonature.core.imports.routes.blueprint
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   geonature.core.imports.routes.Destination
+   geonature.core.imports.routes.DestinationSchema
+
+
+Functions
+---------
+
+.. autoapisummary::
+
+   geonature.core.imports.routes.list_all_destinations
+   geonature.core.imports.routes.get_destination
+
+
+Package Contents
+----------------
+
+.. py:class:: Destination
+
+   Bases: :py:obj:`geonature.utils.env.db.Model`
+
+
+   The base class of the :attr:`.SQLAlchemy.Model` declarative model class.
+
+   To define models, subclass :attr:`db.Model <.SQLAlchemy.Model>`, not this. To
+   customize ``db.Model``, subclass this and pass it as ``model_class`` to
+   :class:`.SQLAlchemy`. To customize ``db.Model`` at the metaclass level, pass an
+   already created declarative model class as ``model_class``.
+
+
+   .. py:attribute:: __tablename__
+      :value: 'bib_destinations'
+
+
+
+   .. py:attribute:: __table_args__
+
+
+   .. py:attribute:: id_destination
+
+
+   .. py:attribute:: id_module
+
+
+   .. py:attribute:: code
+
+
+   .. py:attribute:: label
+
+
+   .. py:attribute:: table_name
+
+
+   .. py:attribute:: active
+
+
+   .. py:attribute:: module
+
+
+   .. py:attribute:: entities
+
+
+   .. py:method:: get_transient_table()
+
+
+   .. py:property:: validity_columns
+
+
+   .. py:property:: statistics_labels
+
+
+   .. py:property:: actions
+
+
+   .. py:method:: allowed_destinations(user: Optional[pypnusershub.db.models.User] = None, action_code: str = 'C') -> List[Destination]
+      :staticmethod:
+
+
+      Return a list of allowed destinations for a given user and an action.
+
+      Parameters
+      ----------
+      user : User, optional
+          The user to filter destinations for. If not provided, the current_user is used.
+      action : str
+          The action to filter destinations for. Possible values are 'C', 'R', 'U', 'V', 'E', 'D'.
+
+      Returns
+      -------
+      allowed_destination : List of Destination
+          List of allowed destinations for the given user.
+
+
+
+   .. py:method:: filter_by_role(user: Optional[pypnusershub.db.models.User] = None, action_code: str = 'C', **kwargs)
+      :classmethod:
+
+
+      Filter Destination by role.
+
+      Parameters
+      ----------
+      user : User, optional
+          The user to filter destinations for. If not provided, the current_user is used.
+
+      Returns
+      -------
+      sqlalchemy.sql.elements.BinaryExpression
+          A filter criterion for the ``id_destination`` column of the ``Destination`` table.
+
+
+
+   .. py:method:: has_instance_permission(user: Optional[pypnusershub.db.models.User] = None, action_code: str = 'C')
+
+      Check if a user has the permissions to do an action on this destination.
+
+      Parameters
+      ----------
+      user : User, optional
+          The user to check the permission for. If not provided, the current_user is used.
+      action_code : str
+          The action to check the permission for. Possible values are 'C', 'R', 'U', 'V', 'E', 'D'.
+
+      Returns
+      -------
+      bool
+          True if the user has the right to do the action on this destination, False otherwise.
+
+
+
+   .. py:method:: __repr__()
+
+
+.. py:class:: DestinationSchema(*args, **kwargs)
+
+   Bases: :py:obj:`utils_flask_sqla.schema.SmartRelationshipsMixin`, :py:obj:`geonature.utils.env.ma.SQLAlchemyAutoSchema`
+
+
+   This mixin automatically exclude from serialization:
+
+   * Nested, RelatedList and Related fields
+   * all fields with exclude=True in their metadata (e.g. ``fields.String(metadata={'exclude': True})``)
+   * For SQLAlchemyAutoSchema, all deffered columns
+
+   Default marshmallow behaviour is to serialize only fields specified in ``only``. This mixin add these:
+
+   * If they are only Nested fields in ``only``, they are added to serialized fields *along with* default serialized fields.
+   * To serialize Nested fields only and not default serialized fields, add ``"-"`` special value to ``only``.
+   * To add excluded fields (through metadata or deffered fields) to the serialization *in addition* to default serialized fields,
+     use '+field_name' syntax.
+
+   Examples :
+
+   .. code-block:: python
+
+      class FooSchema(SmartRelationshipsMixin):
+          id = fields.Int()
+          name = field.Str()
+          default_excluded_field = fields.Str(metadata={"exclude": True})
+          relationship = fields.Nested(OtherSchema) # or field.RelatedList() / field.Related()
+
+      FooSchema().dump() -> {"id": 1, "name": "toto" }
+      FooSchema(only=["id"]).dump() -> {"id": 1}
+      FooSchema(only=["default_excluded_field"]).dump() -> {"default_excluded_field": "test"}
+      FooSchema(only=["+default_excluded_field"]).dump() -> {"id": 1, "name": "toto", "default_excluded_field": "test"}
+      FooSchema(only=["relationship"]).dump() -> {"id": 1, "name": "toto",  "relationship": {OtherSchema...} }
+      FooSchema(only=["id", "relationship"]).dump() -> {"id": 1, "relationship": {OtherSchema...}}
+      FooSchema(only=["-", "relationship"]).dump() -> {"relationship": {OtherSchema...}}
+
+
+   .. py:class:: Meta
+
+      Options object for a Schema.
+
+      Example usage: ::
+
+          from marshmallow import Schema
+
+
+          class MySchema(Schema):
+              class Meta:
+                  fields = ("id", "email", "date_created")
+                  exclude = ("password", "secret_attribute")
+
+      .. admonition:: A note on type checking
+
+          Type checkers will only check the attributes of the `Meta <marshmallow.Schema.Meta>`
+          class if you explicitly subclass `marshmallow.Schema.Meta`.
+
+          .. code-block:: python
+
+              from marshmallow import Schema
+
+
+              class MySchema(Schema):
+                  # Not checked by type checkers
+                  class Meta:
+                      additional = True
+
+
+              class MySchema2(Schema):
+                  # Type checkers will check attributes
+                  class Meta(Schema.Opts):
+                      additional = True  # Incompatible types in assignment
+
+      .. versionremoved:: 3.0.0b7 Remove ``strict``.
+      .. versionadded:: 3.0.0b12 Add `unknown`.
+      .. versionchanged:: 3.0.0b17 Rename ``dateformat`` to `datetimeformat`.
+      .. versionadded:: 3.9.0 Add `timeformat`.
+      .. versionchanged:: 3.26.0 Deprecate ``ordered``. Field order is preserved by default.
+      .. versionremoved:: 4.0.0 Remove ``ordered``.
+
+
+      .. py:attribute:: model
+
+
+      .. py:attribute:: include_fk
+         :value: True
+
+
+
+      .. py:attribute:: load_instance
+         :value: True
+
+
+
+      .. py:attribute:: sqla_session
+
+
+
+   .. py:attribute:: module
+
+
+.. py:data:: blueprint
+
+.. py:function:: list_all_destinations(action_code)
+
+   Return the list of all destinations. If an action code is provided, only the destinations
+   that the user has permission (based on the action_code) to access are returned.
+
+   Parameters:
+   ----------
+   action_code : str
+       The action code to filter destinations. Possible values are 'C', 'R', 'U', 'V', 'E', 'D'.
+
+   Returns:
+   -------
+   destinations : List of Destination
+       List of all destinations.
+
+
+.. py:function:: get_destination(destinationCode)
+
